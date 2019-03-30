@@ -1,20 +1,18 @@
 package io.grpc.proxy;
 
-import io.grpc.MethodDescriptor.Marshaller;
-import io.grpc.examples.experimental.proxy.HelloRequest;
-import io.protostuff.CodedInput;
-import io.protostuff.LinkedBuffer;
-import io.protostuff.ProtobufIOUtil;
-import io.protostuff.ProtobufOutput;
-import io.protostuff.Schema;
-import io.protostuff.runtime.RuntimeSchema;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import io.grpc.MethodDescriptor.Marshaller;
+import io.protostuff.LinkedBuffer;
+import io.protostuff.ProtobufIOUtil;
+import io.protostuff.Schema;
+import io.protostuff.runtime.RuntimeSchema;
+
 public class ProtoStuffReqMsgTransMarshaller implements Marshaller<MessageTransfer>{
+
 	@Override
 	public InputStream stream(MessageTransfer messageTransfer) {
 		ByteArrayOutputStream outputstream = new ByteArrayOutputStream();
@@ -29,8 +27,6 @@ public class ProtoStuffReqMsgTransMarshaller implements Marshaller<MessageTransf
 		InputStream messageIs = new ByteArrayInputStream(arr);
 		return messageIs;
 	}
-	
-	
 
 	@Override
 	public MessageTransfer parse(InputStream stream) {
@@ -44,7 +40,4 @@ public class ProtoStuffReqMsgTransMarshaller implements Marshaller<MessageTransf
 		}
 		return messageTrans;
 	}
-	
-
-	
 }

@@ -1,4 +1,4 @@
-package io.grpc.examples.experimental.proxy;
+package io.grpc.examples.experimental.proxy.share;
 
 import io.grpc.proxy.annotation.GrpcMethod;
 import io.grpc.proxy.annotation.GrpcService;

@@ -29,15 +29,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.grpc.examples.experimental.proxy;
-
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import io.grpc.proxy.client.ProxyClientBuilder;
+package io.grpc.examples.experimental.proxy.client;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.examples.experimental.proxy.share.GreeterService;
+import io.grpc.examples.experimental.proxy.share.HelloRequest;
+import io.grpc.examples.experimental.proxy.share.HelloResponse;
+import io.grpc.proxy.client.ProxyClientBuilder;
 
 /**
  * A simple client that requests a greeting from the {@link HelloWorldServer}.
@@ -47,7 +50,7 @@ public class JavaProxyClient {
 
   private final ManagedChannel channel;
   private final ProxyClientBuilder builder;
-  
+
 
   /** Construct client connecting to HelloWorld server at {@code host:port}. */
   public JavaProxyClient(String host, int port) {
@@ -65,18 +68,16 @@ public class JavaProxyClient {
   public void greet(String name) {
     try {
       logger.info("Will try to greet " + name + " ...");
-      
-      HelloRequest request = new HelloRequest(name);
-      HelloRequest request2 = new HelloRequest(name+"2");
-      
-      
-      
-      GreeterService greeterService = builder.get(GreeterService.class);
-      HelloResponse response = greeterService.hello(request, request2);
-      
-      
-      
-      logger.info("Greeting:------------ " + response.getMessage());
+
+      for (int i = 0; i < 10; ++i) {
+          HelloRequest request = new HelloRequest(name + "-" + i);
+          HelloRequest request2 = new HelloRequest(name + "-" + i + "-2");
+
+          GreeterService greeterService = builder.get(GreeterService.class);
+          HelloResponse response = greeterService.hello(request, request2);
+
+          logger.info("Greeting:------------ " + response.getMessage());
+      }
     } catch (RuntimeException e) {
       logger.log(Level.WARNING, "RPC failed", e);
       return;
@@ -100,7 +101,7 @@ public class JavaProxyClient {
       client.shutdown();
     }
   }
-  
-  
-  
+
+
+
 }

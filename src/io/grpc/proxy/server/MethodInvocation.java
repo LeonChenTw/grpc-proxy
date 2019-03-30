@@ -10,7 +10,7 @@ import io.grpc.stub.StreamObserver;
 public class MethodInvocation implements UnaryMethod<MessageTransfer,Object> {
 	private final Object serviceToInvoke;
 	private final Method method;
-	
+
 	public MethodInvocation(Object serviceToInvoke, Method method) {
 		this.serviceToInvoke = serviceToInvoke;
 		this.method = method;
@@ -21,6 +21,7 @@ public class MethodInvocation implements UnaryMethod<MessageTransfer,Object> {
 		if (method.getParameterTypes().length != request.getLength()) {
 			return;
 		}
+
 		try {
 			Object[] requestParams  = request.retriveRequestParams();
 			Object returnObj = method.invoke(serviceToInvoke, requestParams);
@@ -31,7 +32,4 @@ public class MethodInvocation implements UnaryMethod<MessageTransfer,Object> {
 			responseObserver.onCompleted();
 		}
 	}
-
-	
-
 }

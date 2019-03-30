@@ -1,4 +1,4 @@
-package io.grpc.examples.experimental.proxy;
+package io.grpc.examples.experimental.proxy.server;
 
 import java.util.logging.Logger;
 
